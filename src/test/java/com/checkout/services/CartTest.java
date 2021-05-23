@@ -1,12 +1,24 @@
 package com.checkout.services;
 
 import com.checkout.model.Product;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CartTest {
+
+    private Product item1;
+    private Product item2;
+    private Product item3;
+
+    @BeforeEach
+    public void initialize() {
+        item1 = new Product("001", "Travel Card Holder", 9.25);
+        item2 = new Product("002", "Personalised cufflinks", 45.00);
+        item3 = new Product("003", "Kids T-shirt", 19.95);
+    }
 
     @DisplayName("Add null product then return 0 total price")
     @Test
@@ -27,8 +39,6 @@ class CartTest {
     public void addNullAndValidProductsToCartAndReturnPrice() {
         double expectedPrice = 64.95;
         String expectedPriceInGBPCurrency = "£64.95";
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
 
         Cart cart = new Cart();
         cart.addProduct(null);
@@ -45,9 +55,6 @@ class CartTest {
     public void AddProductsToCartAndReturnPrice() {
         double expectedPrice = 74.20;
         String expectedPriceInGBPCurrency = "£74.20";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
 
         Cart cart = new Cart();
         cart.addProduct(item1);
@@ -64,9 +71,6 @@ class CartTest {
     public void addProductsAndApplyDiscountThenReturnDiscountedTotalPrice() {
         double expectedPrice = 64.20;
         String expectedPriceInGBPCurrency = "£64.20";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
 
         Cart cart = new Cart();
         cart.addProduct(item1);

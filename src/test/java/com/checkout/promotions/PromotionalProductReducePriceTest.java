@@ -25,7 +25,6 @@ class PromotionalProductReducePriceTest {
         cart.addProduct(item2);
     }
 
-
     @DisplayName("Add promotional discount to Cart and return discounted value")
     @Test
     public void addProductsToCartAndReturnPromotionalDiscountValue() {

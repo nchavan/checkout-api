@@ -1,16 +1,13 @@
 # checkout-api
 
-### a. chosen language
+### a. Chosen language
 Java
 
-### b. how you can run code
+### b. How you can run code
 
 ### Installing
 * Clone this repository:
 git clone https://github.com/nchavan/checkout-api.git
-
-### intellij IDEA ###
-* Open the project in intellij IDEA and clean and build the project
 
 ### Command Line - Building & Running project using gradle wrapper
 
@@ -20,6 +17,7 @@ git clone https://github.com/nchavan/checkout-api.git
 - ./gradlew build
 - ./gradlew run
 
+### c. Notes, Assumptions, Decisions ###
 ### Notes ###
 * App is only for Demo purpose and it contains hard coded tests data as specified in the problem statement
 * App if run will only show result for the product 001, 002 & 003.
@@ -37,12 +35,12 @@ git clone https://github.com/nchavan/checkout-api.git
 * Open Closed Principal - Open for extension we can add more product discounts like buy one get one free etc by creating new classes and extending it.
 * Cart has an id field added as every order will have a new unique card id and within production we can use cardId to check different transactions it will be used for troubleshooting purpose
 
-### c. Big O analysis ###
+### d. Big O analysis ###
 Every Order will have n number of products added, m number of promotions added for products & o number of promotions added for cards.
 * products (n) - O(n)
 * products promotions (m) - O(m)
 * card discounts (o) - O(o)
 
-### d. reasons behind data structures chosen ###
+### e. Reasons behind data structures chosen ###
 * Set - sets do not allow duplicate values - product & cart discounts set will not have duplicate promotions added
 * HashMap - As the insertion and access is O(1)

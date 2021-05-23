@@ -4,6 +4,7 @@ import com.checkout.exception.InvalidInput;
 import com.checkout.model.Product;
 import com.checkout.promotions.PromotionalRules;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,13 +12,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CheckoutTest {
 
+    private Product item1;
+    private Product item2;
+    private Product item3;
+    private PromotionalRules promotionalRules;
+
+    @BeforeEach
+    public void initialize() {
+        item1 = new Product("001", "Travel Card Holder", 9.25);
+        item2 = new Product("002", "Personalised cufflinks", 45.00);
+        item3 = new Product("003", "Kids T-shirt", 19.95);
+        promotionalRules = new PromotionalRules();
+    }
+
     @DisplayName("Cart with no product and promotions then return zero total")
     @Test
     public void whenCartWithNoItemsThenReturnTotal() {
         String expectedPrice = "£0.00";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
 
@@ -30,8 +41,6 @@ class CheckoutTest {
     @Test
     public void whenCartWithNullPromotionsThenReturnTotal() throws InvalidInput {
         String expectedPrice = "£29.20";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
 
         Checkout co = new Checkout(null);
         co.scan(item1);
@@ -52,10 +61,6 @@ class CheckoutTest {
     @Test
     public void whenDuplicatePromotionalRulesAddedThenReturnTotalPrice() throws InvalidInput {
         String expectedPrice = "£54.25";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
@@ -73,10 +78,6 @@ class CheckoutTest {
     @Test
     public void whenCartWithDifferentProductsThenApplyDiscountAndReturnPrice() throws InvalidInput {
         String expectedPrice = "£54.25";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
 
@@ -92,11 +93,6 @@ class CheckoutTest {
     @Test
     public void whenCartPriceAboveDiscountTotalThenApplyDiscountReturnPrice() throws InvalidInput {
         String expectedPrice = "£66.78";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item2 = new Product("002", "Personalised cufflinks", 45.00);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
 
@@ -113,10 +109,6 @@ class CheckoutTest {
     @Test
     public void whenCartWithSamePromotionalProductThenApplyDiscountAndReturnTotal() throws InvalidInput {
         String expectedPrice = "£36.95";
-        Product item1 = new Product("001", "Travel Card Holder", 9.25);
-        Product item3 = new Product("003", "Kids T-shirt", 19.95);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
         promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
 
@@ -132,19 +124,14 @@ class CheckoutTest {
     @Test
     public void whenCartWithPromotionalProductsAndTotalDiscountPercentAppliedThenReturnTotal() throws InvalidInput {
         String expectedPrice = "£73.76";
-        Product travelCardHolder = new Product("001", "Travel Card Holder", 9.25);
-        Product personalisedCufflinks = new Product("002", "Personalised cufflinks", 45.00);
-        Product kidsTShirt = new Product("003", "Kids T-shirt", 19.95);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
-        promotionalRules.buyMultipleSameProductsAndReduceProductPrice(travelCardHolder,2, 8.50);
+        promotionalRules.buyMultipleSameProductsAndReduceProductPrice(item1,2, 8.50);
         promotionalRules.applyTotalDiscountOnCart(60, 10);
 
         Checkout co = new Checkout(promotionalRules);
-        co.scan(travelCardHolder);
-        co.scan(personalisedCufflinks);
-        co.scan(travelCardHolder);
-        co.scan(kidsTShirt);
+        co.scan(item1);
+        co.scan(item2);
+        co.scan(item1);
+        co.scan(item3);
 
         String price = co.total();
         assertEquals(price, expectedPrice);
@@ -154,17 +141,12 @@ class CheckoutTest {
     @Test
     public void whenNoPromotionsThenReturnTotal() throws InvalidInput {
         String expectedPrice = "£83.45";
-        Product travelCardHolder = new Product("001", "Travel Card Holder", 9.25);
-        Product personalisedCufflinks = new Product("002", "Personalised cufflinks", 45.00);
-        Product kidsTShirt = new Product("003", "Kids T-shirt", 19.95);
-
-        PromotionalRules promotionalRules = new PromotionalRules();
 
         Checkout co = new Checkout(promotionalRules);
-        co.scan(travelCardHolder);
-        co.scan(personalisedCufflinks);
-        co.scan(travelCardHolder);
-        co.scan(kidsTShirt);
+        co.scan(item1);
+        co.scan(item2);
+        co.scan(item1);
+        co.scan(item3);
 
         String price = co.total();
         assertEquals(price, expectedPrice);
