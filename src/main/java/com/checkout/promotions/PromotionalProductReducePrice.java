@@ -21,7 +21,7 @@ public class PromotionalProductReducePrice implements ProductDiscount {
         double discount = 0.0;
         if (shoppingCart.containsKey(product)) {
             if(shoppingCart.get(product) >= itemsCount) {
-                discount = discount + (product.getPrice() - newPrice) * shoppingCart.get(product);
+                discount += (product.getPrice() - newPrice) * shoppingCart.get(product);
             }
         }
         return discount;

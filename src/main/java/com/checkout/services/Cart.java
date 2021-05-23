@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Cart {
-
     private final Map<Product, Integer> items = new HashMap<>();
     private final String id;
     private double totalPrice = 0.0;
@@ -50,7 +49,7 @@ public class Cart {
             } else {
                 items.put(product, 1);
             }
-            totalPrice = totalPrice + product.getPrice();
+            totalPrice += product.getPrice();
         }
     }
 

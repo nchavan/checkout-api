@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PromotionalProductReducePriceTest {
-
     private Product item1;
     private Product item2;
     private Product item3;

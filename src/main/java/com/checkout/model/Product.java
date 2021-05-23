@@ -1,7 +1,6 @@
 package com.checkout.model;
 
 public class Product {
-
     private final String code;
     private final String name;
     private final double price;

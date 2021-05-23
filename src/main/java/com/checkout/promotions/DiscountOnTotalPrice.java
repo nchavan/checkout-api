@@ -3,7 +3,6 @@ package com.checkout.promotions;
 import com.checkout.promotions.interfaces.CartDiscount;
 
 public class DiscountOnTotalPrice implements CartDiscount {
-
     private final double totalAmount;
     private final int discountPercent;
 
